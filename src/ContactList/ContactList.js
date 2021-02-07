@@ -1,20 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import appActions from "../redux/app/appActions";
+import appOperators from "../redux/app/appOperators";
 
-const ContactList = ({contacts, deleteContact}) => (
-    <ul>
-        {contacts.map(({name, number, id}) => (
-            <li key={id}>
-                <span>{name}: </span>
-                <span>{number}</span>
-                <button type="button"
-                        onClick={() => deleteContact(id)}
-                >Delete
-                </button>
-            </li>))}
+const ContactList = ({contacts, deleteContact, getContacts}) => {
+    useEffect(() => {
+        getContacts();
+    }, [])
 
-    </ul>);
+    return (
+        <ul>
+            {contacts.map(({name, number, id}) => (
+                <li key={id}>
+                    <span>{name}: </span>
+                    <span>{number}</span>
+                    <button type="button"
+                            onClick={() => deleteContact(id)}
+                    >Delete
+                    </button>
+                </li>))}
+
+        </ul>)
+};
 
 const getVisibleContacts = ( contacts, filter) => {
     const normalizedFilter = filter.toLowerCase();
@@ -39,7 +45,8 @@ const mapStateToProps = ({app:{contacts, filter}}) => ({
 });
 
 const mapDispatchFromProps = dispatch => ({
-    deleteContact: id => dispatch(appActions.deleteContact(id))
+    deleteContact: id => dispatch(appOperators.deleteContact(id)),
+    getContacts: () => dispatch(appOperators.getContacts()),
 });
 
 export default connect(mapStateToProps, mapDispatchFromProps)(ContactList);

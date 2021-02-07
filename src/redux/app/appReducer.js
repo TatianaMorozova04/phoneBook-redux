@@ -3,9 +3,11 @@ import types from './appTypes';
 
 const contacts = (state = [], {type, payload}) => {
     switch (type) {
-        case types.DELETE:
+        case types.GET_SUCCESS:
+            return payload
+        case types.DELETE_SUCCESS:
             return state.filter(contact => contact.id !== payload)
-        case types.ADD:
+        case types.ADD_SUCCESS:
             return [...state,payload]
         default:
             return state;

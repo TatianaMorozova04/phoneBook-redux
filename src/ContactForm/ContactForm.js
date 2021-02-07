@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import {connect} from 'react-redux';
 import shortid from "shortid";
-import appActions from "../redux/app/appActions";
+import appOperators from "../redux/app/appOperators";
 
 
 class ContactForm extends Component {
@@ -69,7 +69,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>({
-    getAddContact: (contact) => dispatch(appActions.addContact(contact))
+    getAddContact: (contact) => dispatch(appOperators.addContact(contact))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
