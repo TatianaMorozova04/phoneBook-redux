@@ -1,12 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import appActions from "../redux/app/appActions";
+import appSelectors from "../redux/app/appSelectors"
 
 const Filter = ({ value, onChange }) => (
     <>
-        <p>
-            Find contacts by name
-        </p>
+        <p>Find contacts by name</p>
         <label>
             <input type="text"
                    value={value}
@@ -16,7 +15,7 @@ const Filter = ({ value, onChange }) => (
 );
 
 const mapStateToProps = state => ({
-    value: state.app.filter
+    value: appSelectors.getFilter(state),
 });
 
 const mapDispatchFromProps = dispatch => ({

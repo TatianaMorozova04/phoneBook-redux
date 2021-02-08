@@ -1,7 +1,8 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import shortid from "shortid";
 import appOperators from "../redux/app/appOperators";
+import appSelectors from "../redux/app/appSelectors";
 
 
 class ContactForm extends Component {
@@ -63,9 +64,8 @@ class ContactForm extends Component {
     }
 }
 
-
 const mapStateToProps = state => ({
-    contacts: state.app.contacts
+    contacts: appSelectors.getContacts(state)
 });
 
 const mapDispatchToProps = dispatch =>({
@@ -73,87 +73,3 @@ const mapDispatchToProps = dispatch =>({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
-
-
-//Код с использованием хуков
-// export default function ContactForm ({handleSubmit}) {
-//     const [name,setName] = useState('');
-//     const [number,setNumber] = useState('');
-//
-//     const reset = () => {
-//         setNumber('');
-//         setName('');
-//     }
-//
-//     const submitForm = (event) => {
-//         handleSubmit(event, name, number);
-//         reset()
-//     }
-//
-//     return (
-//         <form onSubmit={submitForm}>
-//             <p>Name</p>
-//             <label>
-//                 <input type="text"
-//                        name="name"
-//                        value={name}
-//                        onChange={(e) => {setName(e.currentTarget.value)}}/>
-//             </label>
-//             <p>Number</p>
-//             <label>
-//                 <input type="number"
-//                        name="number"
-//                        value={number}
-//                        onChange={(e) => {setNumber(e.currentTarget.value)}}/>
-//             </label>
-//             <button type="submit">Add contact</button>
-//         </form>
-//     )
-// }
-
-// Код с использованием классов
-// class ContactForm extends Component {
-//     state = {
-//         name: '',
-//         number: '',
-//     }
-//
-//     handleChange = event => {
-//         const {name, value} = event.currentTarget;
-//         this.setState({[name]: value})
-//     }
-//
-//     submitForm = event => {
-//         const {name, number} = this.state;
-//         this.props.handleSubmit(event, name, number);
-//         this.reset()
-//     }
-//
-//     reset = () => this.setState({name: "", number: ""});
-//
-//     render() {
-//         const {name, number} = this.state;
-//
-//         return (
-//             <form onSubmit={this.submitForm}>
-//                 <p>Name</p>
-//                 <label>
-//                     <input type="text"
-//                            name="name"
-//                            value={name}
-//                            onChange={this.handleChange}/>
-//                 </label>
-//                 <p>Number</p>
-//                 <label>
-//                     <input type="number"
-//                            name="number"
-//                            value={number}
-//                            onChange={this.handleChange}/>
-//                 </label>
-//                 <button type="submit">Add contact</button>
-//             </form>
-//         )
-//     }
-// }
-//
-// export default ContactForm;
