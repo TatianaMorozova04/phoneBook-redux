@@ -24,8 +24,8 @@ const ContactList = ({contacts, deleteContact, getContacts}) => {
 };
 
 
-const mapStateToProps = (state) => ({
-    contacts: appSelectors.getVisibleContacts(state)
+const mapStateToProps = state => ({
+    contacts: appSelectors.getVisibleContacts(state),
 });
 
 const mapDispatchFromProps = dispatch => ({

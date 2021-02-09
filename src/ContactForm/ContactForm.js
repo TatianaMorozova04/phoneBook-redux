@@ -43,33 +43,38 @@ class ContactForm extends Component {
         const {name, number} = this.state;
 
         return (
-            <form onSubmit={this.submitForm}>
-                <p>Name</p>
-                <label>
-                    <input type="text"
-                           name="name"
-                           value={name}
-                           onChange={this.handleChange}/>
-                </label>
-                <p>Number</p>
-                <label>
-                    <input type="number"
-                           name="number"
-                           value={number}
-                           onChange={this.handleChange}/>
-                </label>
-                <button type="submit">Add contact</button>
-            </form>
+            <>
+                {this.props.isLoadingContacts && <h2>Loading...</h2>}
+                <form onSubmit={this.submitForm}>
+                    <p>Name</p>
+                    <label>
+                        <input type="text"
+                               name="name"
+                               value={name}
+                               onChange={this.handleChange}/>
+                    </label>
+                    <p>Number</p>
+                    <label>
+                        <input type="number"
+                               name="number"
+                               value={number}
+                               onChange={this.handleChange}/>
+                    </label>
+                    <button type="submit">Add contact</button>
+                </form>
+            </>
+
         )
     }
 }
 
 const mapStateToProps = state => ({
-    contacts: appSelectors.getContacts(state)
+    contacts: appSelectors.getContacts(state),
+    isLoadingContacts: state.app.loading,
 });
 
-const mapDispatchToProps = dispatch =>({
+const mapDispatchToProps = dispatch => ({
     getAddContact: (contact) => dispatch(appOperators.addContact(contact))
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
